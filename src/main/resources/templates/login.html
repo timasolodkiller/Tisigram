@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+    <meta charset="UTF-8">
+    <title>Вход</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="login_form">
+    <h2>Вход</h2>
+    <form th:object="${user}" method="post">
+        <div class="input-group">
+            <label for="login">Логин:</label>
+            <input type="login" id="login" th:field="*{login}" required>
+        </div>
+        <div class="input-group">
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" th:field="*{password}" required>
+        </div>
+        <button type="submit">Войти</button>
+        <div class="register-link">
+            <p>Нет аккаунта? <a th:href="@{/registration}">Зарегистрируйтесь</a></p>
+        </div>
+    </form>
+</div>
+</body>
+</html>
