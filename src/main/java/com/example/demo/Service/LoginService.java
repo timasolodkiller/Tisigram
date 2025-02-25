@@ -1,31 +1,32 @@
-package com.example.demo;
+package com.example.demo.Service;
 
+import com.example.demo.Constants.AppConstants;
+import com.example.demo.DTO.User;
+import com.example.demo.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-
 @Service
-public class RegistationService {
+public class LoginService {
     private final UserRepository userRepository;
 
+
     @Autowired
-    public RegistationService(UserRepository userRepository) {
+    public LoginService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public ResponseEntity<String> checkPassword(User user) {
+    public ResponseEntity<String> checkUser(User user) {
         HttpHeaders headers = new HttpHeaders();
-
-        if (!user.getPassword().equals(user.getConfirmPassword())) {
-            headers.add("Location", AppConstants.REGISTRATION_PAGE_PATH);
+        User findUser = userRepository.findById(user.getLogin()).orElse(null);
+        if (findUser != null) {
+            headers.add("Location", AppConstants.LOGIN_PAGE_PATH);
             return new ResponseEntity<>(headers, HttpStatus.FOUND);
         }
-        userRepository.save(user);
         headers.add("Location", AppConstants.LOGIN_PAGE_PATH);
         return new ResponseEntity<>(headers, HttpStatus.FOUND);
     }
-
 }

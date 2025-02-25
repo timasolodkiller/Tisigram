@@ -1,7 +1,10 @@
-package com.example.demo;
+package com.example.demo.Controller;
 
+import com.example.demo.Constants.AppConstants;
+import com.example.demo.DTO.RegistrationResponse;
+import com.example.demo.DTO.User;
+import com.example.demo.Service.RegistationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +16,7 @@ public class RestController {
     private final RegistationService registationService;
 
     @Autowired
-    public RestController(Environment env, RegistationService registationService) {
+    public RestController(RegistationService registationService) {
         this.registationService = registationService;
     }
 
@@ -24,7 +27,7 @@ public class RestController {
     }
 
     @PostMapping(AppConstants.REGISTRATION_PAGE_PATH)
-    public ResponseEntity<String> processRegistration(@ModelAttribute("user") User user) {
+    public ResponseEntity<RegistrationResponse> processRegistration(@ModelAttribute("user") User user) {
         return registationService.checkPassword(user);
     }
 
@@ -35,7 +38,7 @@ public class RestController {
     }
 
     @PostMapping(AppConstants.LOGIN_PAGE_PATH)
-    public ResponseEntity<String> processLogin(@ModelAttribute("user") User user) {
+    public ResponseEntity<?> processLogin(@ModelAttribute("user") User user) {
         return registationService.checkPassword(user);
     }
 }
